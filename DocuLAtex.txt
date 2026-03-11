@@ -1,0 +1,153 @@
+\documentclass{article}
+\usepackage{graphicx} % Required for inserting images
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{forest}
+\usepackage{float}
+\usepackage{amsmath}
+\usepackage{listings}
+\setcounter{secnumdepth}{0}
+\usepackage{booktabs}
+\title{ICT 373 Assignment Question 1 External documentation}
+
+\author{3351 3803: Carl Fujinami}
+\date{March 2026}
+
+\begin{document}
+
+\maketitle
+\newpage
+\tableofcontents
+\newpage
+\section{Description}
+This project is a JavaScript and HTML web page that collects name, phone numbers, birth date, and favourite pastime. The website performs client-side validation. The website sends the user-inputted information to a server via an HTTP protocol.
+\section{Design structure}
+\begin{figure}[H]
+\centering
+\begin{forest}
+for tree={
+    draw,
+    rounded corners,
+    align=center,
+    top color=white,
+    bottom color=gray!10,
+    edge={-},
+    l sep=15pt,
+    s sep=20pt,
+    minimum width=2.8cm,
+    minimum height=0.9cm
+}
+[formIsValid
+    [nameIsValid]
+    [phoneNumberIsValid]
+    [dateIsValid]
+]
+\end{forest}
+\caption{Structure chart of the program}
+\end{figure}
+\section{Pseudocode}
+\begin{algorithm}[H]
+\caption{formIsValid}\label{alg:formIsValid}
+\begin{algorithmic}
+\Require $name, phoneNumber,day,month,year$
+\Ensure nameIsValid \&\& nameIsValid \&\& dateIsValid
+\State return nameIsValid \&\& nameIsValid \&\& dateIsValid
+\end{algorithmic}
+\end{algorithm}
+\begin{algorithm}[H]
+\caption{nameIsValid}\label{alg:nameIsValid}
+\begin{algorithmic}
+\Require $name$
+\Ensure $50 \geq name.length \geq 1$
+\If{name is empty or $name.length \geq 50$}
+    \State return false
+\Else{}
+    \State return true
+\EndIf
+\end{algorithmic}
+\end{algorithm}
+\begin{algorithm}[H]
+\caption{phoneNumberIsValid}\label{alg:phoneNumberIsValid}
+\begin{algorithmic}
+\Require $number$
+\Ensure $optionalPrefix\{0,15\}+[0-9]\{8\}$
+\State $prefix \gets getOptionalPrefix(number)$
+\State $suffix \gets removePrefix(number)$
+\State $rawSuffix \gets removeFillers(suffix)$
+\If{$prefix.length>MAXE164$}
+    \State return false
+\EndIf
+\If{$not(rawSuffix.length==8)$}
+    \State return false
+\EndIf
+\If{$isNotDigit(rawSuffix)$}
+    \State return false
+\EndIf
+\end{algorithmic}
+\end{algorithm}
+\begin{algorithm}[H]
+\caption{dateIsValid}\label{alg:dateIsValid}
+\begin{algorithmic}
+\Require $date,month,year$
+\Ensure yearIsValid \&\& monthIsValid \&\& dayIsValid
+\State $dayIsValid \gets true$
+\If{$0 \geq year \geq MAXINT$}
+    \State return false
+\EndIf
+\If{$0 \geq month \geq 12$}
+    \State return false
+\EndIf
+\If{$date<1$}
+    \State return false
+\EndIf
+\If{month in ${1,3,5,7,8,10,12}$}
+    \State return $31\geq date$
+\ElsIf{month in ${4,6,9,11}$}
+    \State return $30\geq date$
+\Else{}
+    \If{$year\%4!=0$}
+    \State return $29\geq date$
+    \Else{}
+    \State return $28\geq date$
+    \EndIf
+\EndIf
+\end{algorithmic}
+\end{algorithm}
+
+\section{Testing}Explain how you tested the program:
+\begin{itemize}
+    \item normal cases
+    \item boundary cases
+    \item invalid input cases
+\end{itemize}
+\subsection{Test Cases}
+\begin{table}[H]
+\centering
+\begin{tabular}{llll}
+\toprule
+Test ID & Input & Expected Result & Actual Result \\
+\midrule
+T1 & example input & correct output & correct output \\
+T2 & boundary input & handled correctly & handled correctly \\
+T3 & invalid input & error shown & error shown \\
+\bottomrule
+\end{tabular}
+\caption{Summary of test cases}
+\end{table}
+\subsection{Sample results}
+\section{Source code}
+\begin{lstlisting}[language=Python, caption={Calculate PMV}, label={lst:code}]
+import numpy as np
+def incmatrix(genl1,genl2):
+    m = len(genl1)
+    n = len(genl2)
+    # ... your code here
+\end{lstlisting}
+\section{License}
+\text{MIT License
+
+Copyright (c) 2026 Carl Fujinami
+
+Full MIT License text can be found in source 1.2.6
+}
+\end{document}
