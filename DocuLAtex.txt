@@ -6,6 +6,8 @@
 \usepackage{float}
 \usepackage{amsmath}
 \usepackage{listings}
+\usepackage{caption}
+\usepackage{pdflscape}
 \setcounter{secnumdepth}{0}
 \usepackage{booktabs}
 \title{ICT 373 Assignment Question 1 External documentation}
@@ -23,7 +25,7 @@
 This project is a JavaScript and HTML web page that collects name, phone numbers, birth date, and favourite pastime. The website performs client-side validation. The website sends the user-inputted information to a server via an HTTP protocol.
 \section{Design structure}
 \begin{figure}[H]
-\centering
+
 \begin{forest}
 for tree={
     draw,
@@ -89,12 +91,9 @@ for tree={
 \caption{dateIsValid}\label{alg:dateIsValid}
 \begin{algorithmic}
 \Require $date,month,year$
-\Ensure yearIsValid \&\& monthIsValid \&\& dayIsValid
+\Ensure yearIsValid \&\& dayIsValid
 \State $dayIsValid \gets true$
 \If{$0 \geq year \geq MAXINT$}
-    \State return false
-\EndIf
-\If{$0 \geq month \geq 12$}
     \State return false
 \EndIf
 \If{$date<1$}
@@ -120,20 +119,35 @@ for tree={
     \item boundary cases
     \item invalid input cases
 \end{itemize}
+\begin{landscape}
 \subsection{Test Cases}
-\begin{table}[H]
-\centering
-\begin{tabular}{llll}
+\hspace*{-2cm}
+\begin{minipage}{\linewidth}
+\small
+\captionof{table}{Summary of test cases}
+\begin{tabular}{p{0.5cm}p{6cm}p{6cm}p{5cm}}
 \toprule
 Test ID & Input & Expected Result & Actual Result \\
 \midrule
-T1 & example input & correct output & correct output \\
-T2 & boundary input & handled correctly & handled correctly \\
-T3 & invalid input & error shown & error shown \\
+T1 & , 0412345678, 15, January, 2000 & Error shown; name is required & \\
+T2 & Name is above fifty characters long & Error shown; name is too long & \\
+T3 & Alan W, 0412345678, 15, January, 2000 & Accepted with a space in between name. & \\
+T4 & John, , 15, January, 2000 & Error shown; phone number is required & \\
+T5 & Extension code is above 15 numbers & Error shown; extension code is too long & \\
+T6 & John, 12345, 15, January, 2000 & Error shown; phone number is not eight digits & \\
+T7 & John, 0412345678, 0, January, 2000 & Error shown; day cannot be less than 1 & \\
+T8 & John, 0412345678, 1, January, 2000 & Accepted; day is at the minimum valid boundary & \\
+T9 & John, 0412345678, 29, February, 2000 & Error shown; 29 exceeds dates of February in a leap year. & \\
+T10 & John, 0412345678, 29, February, 2001 & Accepted. Not leap year & \\
+T11 & John, 0412345678, 31, April, 0 & Error shown; this month does not have 31 days. & \\
+T12 & John, 0412345678, 15, January, -1 & Error shown; year is below minimum valid range & \\
+T13 & John, 0412345678, 15, January, 0 & Accepted minimum valid year & \\
+T14 & John, 0412345678, 15, January, MAX\_SAFE\_INTEGER + 1 & Error: exceeds maximum valid year & \\
+T15 & John, 0412345678, 15, January, MAX\_SAFE\_INTEGER & Accepted max valid year & \\
 \bottomrule
 \end{tabular}
-\caption{Summary of test cases}
-\end{table}
+\end{minipage}
+\end{landscape}
 \subsection{Sample results}
 \section{Source code}
 \begin{lstlisting}[language=Python, caption={Calculate PMV}, label={lst:code}]
